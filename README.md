@@ -2,16 +2,14 @@
 
 A React component for previewing tweets before posting, built on top of [react-tweet](https://github.com/vercel/react-tweet). This library focuses on data management and preview functionality, leveraging react-tweet's rendering capabilities.
 
-[![Storybook](https://img.shields.io/badge/Storybook-View%20Demo-FF4785?style=for-the-badge&logo=storybook&logoColor=white)](https://paul-pro.github.io/react-tweet-preview)
+[![Storybook](https://img.shields.io/badge/Storybook-View_Demo-1f618d?style=for-the-badge&labelColor=FF4785&logo=storybook&logoColor=white)](https://paul-pro.github.io/react-tweet-preview)
 
 ## Installation
 
 ```bash
-npm install react-tweet-preview
-# or
-yarn add react-tweet-preview
-# or
 bun add react-tweet-preview
+# or oldfashioned
+npm install react-tweet-preview
 ```
 
 ## Usage
@@ -68,6 +66,7 @@ Future improvements and features we're considering:
 - [ ] Accessibility improvements
 - [ ] Error boundary for graceful error handling
 - [ ] Tweet thread support
+- [ ] Use storycap to refresh readme image
 
 ## License
 
