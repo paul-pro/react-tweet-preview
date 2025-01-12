@@ -1,6 +1,6 @@
 {
   "name": "react-tweet-preview",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "files": [
     "dist"
@@ -41,7 +41,12 @@
     "type": "git",
     "url": "git+https://github.com/paul-pro/react-tweet-preview.git"
   },
-  "keywords": ["react", "twitter", "preview", "tweet"],
+  "keywords": [
+    "react",
+    "twitter",
+    "preview",
+    "tweet"
+  ],
   "author": "Pavel Prokudin",
   "bugs": {
     "url": "https://github.com/paul-pro/react-tweet-preview/issues"
