@@ -3,26 +3,38 @@ import type { Tweet } from 'react-tweet/api';
 
 export type TweetPreviewProps = {
   content: string;
-  author: {
-    name: string | null | undefined;
-    username: string | null | undefined;
-    image: string | null | undefined;
+  author?: {
+    name?: string | null;
+    username?: string | null;
+    image?: string | null;
   };
   theme?: 'light' | 'dark';
 };
 
 const MAX_TWEET_LENGTH = 280;
 
-const createPreviewTweet = ({ content, author }: TweetPreviewProps): Tweet => {
-  const username = author.username?.toLowerCase().replace(/\s+/g, '') ?? 'user';
+const DEFAULT_AUTHOR = {
+  name: null,
+  username: null,
+  image: null,
+} as const;
+
+const FALLBACK_AUTHOR = {
+  name: 'User',
+  username: 'user',
+  image: 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png',
+} as const;
+
+const createPreviewTweet = ({ content, author = DEFAULT_AUTHOR }: TweetPreviewProps): Tweet => {
+  const { name, username, image } = author;
+  const normalizedUsername = username?.toLowerCase().replace(/\s+/g, '') ?? FALLBACK_AUTHOR.username;
   return {
     text: content,
     created_at: new Date().toISOString(),
     user: {
-      name: author.name ?? 'User',
-      screen_name: username,
-      profile_image_url_https:
-        author.image ?? 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png',
+      name: name ?? FALLBACK_AUTHOR.name,
+      screen_name: normalizedUsername,
+      profile_image_url_https: image ?? FALLBACK_AUTHOR.image,
       profile_image_shape: 'Circle',
       verified: false,
       is_blue_verified: false,
@@ -53,7 +65,7 @@ const createPreviewTweet = ({ content, author }: TweetPreviewProps): Tweet => {
   };
 };
 
-export const TweetPreview = ({ content, author, theme = 'light' }: TweetPreviewProps) => {
+export const TweetPreview = ({ content, author = DEFAULT_AUTHOR, theme = 'light' }: TweetPreviewProps) => {
   if (content.length > MAX_TWEET_LENGTH) {
     throw new Error(`Tweet content exceeds maximum length of ${MAX_TWEET_LENGTH} characters`);
   }

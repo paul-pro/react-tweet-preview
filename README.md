@@ -33,12 +33,16 @@ function App() {
 
 ## Props
 
-- `content`: The content of the tweet (limited to 280 characters)
-- `author`: Author information object
-  - `name`: Display name
-  - `username`: Twitter handle (without @)
-  - `image`: URL to profile picture
-- `theme`: Theme mode for the tweet preview ('light' | 'dark', defaults to 'light')
+\* Required props
+
+| Prop | Type | Description | Default |
+|------|------|-------------|---------|
+| `content` * | `string` | The content of the tweet (limited to 280 characters) | - |
+| `author` | `object` | Author information object | 👇 |
+| `author.name` | `string` | Display name | `'User'` |
+| `author.username` | `string` | Twitter handle (without @) | `'user'` |
+| `author.image` | `string` | URL to profile picture | Default Twitter avatar |
+| `theme` | `'light' \| 'dark'` | Theme mode for the tweet preview | `'light'` |
 
 ## Features
 
