@@ -21,5 +21,18 @@ export const Default: Story = {
       username: 'johndoe',
       image: 'https://avatars.githubusercontent.com/u/1?v=4',
     },
+    theme: 'light',
+  },
+};
+
+export const Dark: Story = {
+  args: {
+    content: 'This is a preview of a tweet with #hashtag and @mention in dark mode',
+    author: {
+      name: 'John Doe',
+      username: 'johndoe',
+      image: 'https://avatars.githubusercontent.com/u/1?v=4',
+    },
+    theme: 'dark',
   },
 };

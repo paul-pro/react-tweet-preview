@@ -8,6 +8,7 @@ export type TweetPreviewProps = {
     username: string | null | undefined;
     image: string | null | undefined;
   };
+  theme?: 'light' | 'dark';
 };
 
 const MAX_TWEET_LENGTH = 280;
@@ -52,18 +53,24 @@ const createPreviewTweet = ({ content, author }: TweetPreviewProps): Tweet => {
   };
 };
 
-export const TweetPreview = ({ content, author }: TweetPreviewProps) => {
+export const TweetPreview = ({ content, author, theme = 'light' }: TweetPreviewProps) => {
   if (content.length > MAX_TWEET_LENGTH) {
     throw new Error(`Tweet content exceeds maximum length of ${MAX_TWEET_LENGTH} characters`);
   }
 
   const tweet = enrichTweet(createPreviewTweet({ content, author }));
 
-  return (
+  const tweetContent = (
     <TweetContainer>
       <TweetHeader tweet={tweet} />
       <TweetBody tweet={tweet} />
       <TweetInfo tweet={tweet} />
     </TweetContainer>
   );
+
+  if (theme === 'dark') {
+    return <div data-theme='dark'>{tweetContent}</div>;
+  }
+
+  return tweetContent;
 };

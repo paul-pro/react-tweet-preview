@@ -38,6 +38,7 @@ function App() {
   - `name`: Display name
   - `username`: Twitter handle (without @)
   - `image`: URL to profile picture
+- `theme`: Theme mode for the tweet preview ('light' | 'dark', defaults to 'light')
 
 ## Features
 
