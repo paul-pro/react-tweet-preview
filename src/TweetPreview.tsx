@@ -66,4 +66,4 @@ export const TweetPreview = ({ content, author }: TweetPreviewProps) => {
       <TweetInfo tweet={tweet} />
     </TweetContainer>
   );
-}; 
+};

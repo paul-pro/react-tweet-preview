@@ -12,4 +12,4 @@ const config: StorybookConfig = {
   },
 };
 
-export default config; 
+export default config;

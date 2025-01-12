@@ -13,12 +13,7 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: [
-        'react',
-        'react/jsx-runtime',
-        'react-tweet',
-        ...builtinModules,
-      ],
+      external: ['react', 'react/jsx-runtime', 'react-tweet', ...builtinModules],
       output: {
         globals: {
           react: 'React',
@@ -27,4 +22,4 @@ export default defineConfig({
       },
     },
   },
-}); 
+});
