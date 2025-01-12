@@ -9,6 +9,7 @@ export type TweetPreviewProps = {
     image?: string | null;
   };
   theme?: 'light' | 'dark';
+  created_at?: Date;
 };
 
 const MAX_TWEET_LENGTH = 280;
@@ -25,12 +26,12 @@ const FALLBACK_AUTHOR = {
   image: 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png',
 } as const;
 
-const createPreviewTweet = ({ content, author = DEFAULT_AUTHOR }: TweetPreviewProps): Tweet => {
+const createPreviewTweet = ({ content, author = DEFAULT_AUTHOR, created_at = new Date() }: TweetPreviewProps): Tweet => {
   const { name, username, image } = author;
   const normalizedUsername = username?.toLowerCase().replace(/\s+/g, '') ?? FALLBACK_AUTHOR.username;
   return {
     text: content,
-    created_at: new Date().toISOString(),
+    created_at: created_at.toISOString(),
     user: {
       name: name ?? FALLBACK_AUTHOR.name,
       screen_name: normalizedUsername,
@@ -65,12 +66,12 @@ const createPreviewTweet = ({ content, author = DEFAULT_AUTHOR }: TweetPreviewPr
   };
 };
 
-export const TweetPreview = ({ content, author = DEFAULT_AUTHOR, theme = 'light' }: TweetPreviewProps) => {
+export const TweetPreview = ({ content, author = DEFAULT_AUTHOR, theme = 'light', created_at }: TweetPreviewProps) => {
   if (content.length > MAX_TWEET_LENGTH) {
     throw new Error(`Tweet content exceeds maximum length of ${MAX_TWEET_LENGTH} characters`);
   }
 
-  const tweet = enrichTweet(createPreviewTweet({ content, author }));
+  const tweet = enrichTweet(createPreviewTweet({ content, author, created_at }));
 
   const tweetContent = (
     <TweetContainer>

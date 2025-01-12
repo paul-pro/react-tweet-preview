@@ -43,6 +43,7 @@ function App() {
 | `author.username` | `string` | Twitter handle (without @) | `'user'` |
 | `author.image` | `string` | URL to profile picture | Default Twitter avatar |
 | `theme` | `'light' \| 'dark'` | Theme mode for the tweet preview | `'light'` |
+| `created_at` | `Date` | Tweet creation timestamp | Current date/time |
 
 ## Features
 
