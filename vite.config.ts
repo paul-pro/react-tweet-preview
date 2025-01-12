@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
-import { builtinModules } from 'module';
+import { resolve } from 'node:path';
+import { builtinModules } from 'node:module';
 
 export default defineConfig({
   plugins: [react()],

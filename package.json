@@ -20,7 +20,9 @@
     "lint": "biome lint .",
     "format": "biome format . --write",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "preversion": "bun run lint && tsc",
+    "postversion": "git push origin --tags"
   },
   "peerDependencies": {
     "react": "^18.0.0",

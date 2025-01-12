@@ -43,37 +43,23 @@
 2. **Creating a Release**
    ```bash
    # Update version and create tag
-   bun version patch  # for bug fixes
-   bun version minor  # for new features
-   bun version major  # for breaking changes
+   npm version patch  # for bug fixes
+   npm version minor  # for new features
+   npm version major  # for breaking changes
    ```
    This will:
+   - Run lint and build checks
    - Update version in package.json
    - Create a git tag
    - Push changes and tag to GitHub
 
 3. **Automated Release**
-   The GitHub Action will automatically:
+   The GitHub Actions will automatically:
    - Create a GitHub release
-   - Build the package
-   - Publish to npm
-
-## NPM Authentication
-
-To publish to npm, you need to:
-
-1. Create an npm account if you don't have one
-2. Login to npm:
-   ```bash
-   npm login
-   ```
-3. Create an access token:
-   - Go to npm website → Settings → Access Tokens
-   - Create a new token with publish rights
-4. Add the token to GitHub repository:
-   - Go to repository Settings → Secrets
-   - Add a new secret named `NPM_TOKEN`
-   - Paste your npm token as the value
+   - Build and publish to npm
+   - Deploy Storybook documentation
+     - Latest version at `/latest`
+     - Tagged versions at `/<version>`
 
 ## Commit Guidelines
 
