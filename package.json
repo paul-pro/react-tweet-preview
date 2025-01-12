@@ -19,6 +19,7 @@
     "build": "tsc && vite build",
     "lint": "biome lint .",
     "format": "biome format . --write",
+    "ci": "biome ci --reporter=github && tsc --noEmit",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "preversion": "bun run lint && tsc",
