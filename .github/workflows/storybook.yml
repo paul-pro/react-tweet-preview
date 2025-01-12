@@ -19,6 +19,10 @@ jobs:
       url: ${{ steps.build-publish.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
       - id: build-publish
         uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
         with:
