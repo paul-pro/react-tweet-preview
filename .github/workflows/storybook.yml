@@ -1,0 +1,82 @@
+name: Storybook
+
+on:
+  push:
+    branches: [main]
+  release:
+    types: [published]
+
+jobs:
+  deploy-storybook:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Lint and Type Check
+        run: |
+          bun run lint
+          bun run format --check
+          bun run tsc --noEmit
+
+      - name: Get version
+        id: version
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          else
+            echo "version=latest" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Build Storybook
+        run: bun run build-storybook --output-dir storybook-static/${{ steps.version.outputs.version }}
+
+      - name: Create version list
+        run: |
+          mkdir -p storybook-static
+          cd storybook-static
+          echo "<!DOCTYPE html>
+          <html>
+          <head>
+            <title>React Tweet Preview - Storybook Versions</title>
+            <style>
+              body { font-family: system-ui; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+              .version { margin: 1rem 0; padding: 1rem; border: 1px solid #eee; border-radius: 8px; }
+              .version a { color: #0366d6; text-decoration: none; font-weight: 500; }
+              .version a:hover { text-decoration: underline; }
+              .version.latest { background: #f6f8fa; }
+            </style>
+          </head>
+          <body>
+            <h1>React Tweet Preview - Storybook Versions</h1>
+            <div class='version latest'>
+              <h2><a href='./latest'>Latest Version (main branch)</a></h2>
+            </div>
+            <div id='versions'></div>
+            <script>
+              fetch('https://api.github.com/repos/${{ github.repository }}/releases')
+                .then(r => r.json())
+                .then(releases => {
+                  document.getElementById('versions').innerHTML = releases
+                    .map(r => \`<div class='version'>
+                      <h2><a href='./\${r.tag_name.replace('v', '')}'>\${r.tag_name}</a></h2>
+                      <p>\${r.body || ''}</p>
+                    </div>\`)
+                    .join('');
+                });
+            </script>
+          </body>
+          </html>" > index.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: storybook-static
+          keep_files: true 
