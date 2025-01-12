@@ -36,5 +36,15 @@
     "@vitejs/plugin-react": "^4.2.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.12"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paul-pro/react-tweet-preview.git"
+  },
+  "keywords": ["react", "twitter", "preview", "tweet"],
+  "author": "Pavel Prokudin",
+  "bugs": {
+    "url": "https://github.com/paul-pro/react-tweet-preview/issues"
+  },
+  "homepage": "https://paul-pro.github.io/react-tweet-preview"
 }
