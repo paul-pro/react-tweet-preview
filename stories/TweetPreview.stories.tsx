@@ -1,5 +1,7 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TweetPreview } from '../src/TweetPreview';
+import { TweetErrorBoundary } from '../src/TweetErrorBoundary';
 
 const meta = {
   title: 'Components/TweetPreview',
@@ -34,5 +36,23 @@ export const Dark: Story = {
       image: 'https://avatars.githubusercontent.com/u/1?v=4',
     },
     theme: 'dark',
+  },
+};
+
+const ErrorExample = () => {
+    throw new Error('Example error to demonstrate TweetErrorBoundary');
+    return null;
+  };
+
+export const ErrorBoundary: StoryObj = {
+  render: () => (
+    <TweetErrorBoundary>
+      <ErrorExample />
+    </TweetErrorBoundary>
+  ),
+  parameters: {
+    docs: {
+      description: 'Shows error display when an error occurs',
+    },
   },
 };

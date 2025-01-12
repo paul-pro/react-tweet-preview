@@ -1,5 +1,6 @@
 import { TweetBody, TweetContainer, TweetHeader, TweetInfo, enrichTweet } from 'react-tweet';
 import type { Tweet } from 'react-tweet/api';
+import { TweetErrorBoundary } from './TweetErrorBoundary';
 
 export type TweetPreviewProps = {
   content: string;
@@ -77,8 +78,12 @@ export const TweetPreview = ({ content, author = {}, theme = 'light', created_at
   );
 
   if (theme === 'dark') {
-    return <div data-theme='dark'>{tweetContent}</div>;
+    return (
+      <TweetErrorBoundary>
+        <div data-theme='dark'>{tweetContent}</div>
+      </TweetErrorBoundary>
+    );
   }
 
-  return tweetContent;
+  return <TweetErrorBoundary>{tweetContent}</TweetErrorBoundary>;
 };
