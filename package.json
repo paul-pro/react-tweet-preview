@@ -22,7 +22,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "preversion": "bun run lint && tsc",
-    "postversion": "git push origin --tags"
+    "postversion": "git push && git push --tags"
   },
   "peerDependencies": {
     "react": "^18.0.0",
