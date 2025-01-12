@@ -1,4 +1,4 @@
-import { TweetBody, TweetContainer, TweetHeader, TweetInfo, enrichTweet } from 'react-tweet';
+import { TweetBody, TweetContainer, TweetHeader, TweetInfo, enrichTweet, TweetInReplyTo, TweetMedia, QuotedTweet, TweetActions } from 'react-tweet';
 import type { Tweet } from 'react-tweet/api';
 import { TweetErrorBoundary } from './TweetErrorBoundary';
 
@@ -12,6 +12,7 @@ export type TweetPreviewProps = {
   };
   theme?: 'light' | 'dark';
   created_at?: Date;
+  favorite_count?: number;
 };
 
 const MAX_TWEET_LENGTH = 280;
@@ -22,7 +23,7 @@ const FALLBACK_AUTHOR = {
   image: 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png',
 } as const;
 
-const createPreviewTweet = ({ content, author = {}, created_at = new Date() }: TweetPreviewProps): Tweet => {
+const createPreviewTweet = ({ content, author = {}, created_at = new Date(), favorite_count }: TweetPreviewProps): Tweet => {
   const { name, username, image, is_verified = false } = author;
   const normalizedUsername = username?.toLowerCase().replace(/\s+/g, '');
   return {
@@ -44,7 +45,7 @@ const createPreviewTweet = ({ content, author = {}, created_at = new Date() }: T
       symbols: [],
     },
     __typename: 'Tweet',
-    favorite_count: 0,
+    favorite_count: favorite_count ?? 0,
     conversation_count: 0,
     news_action_type: 'conversation',
     lang: 'en',
@@ -62,18 +63,19 @@ const createPreviewTweet = ({ content, author = {}, created_at = new Date() }: T
   };
 };
 
-export const TweetPreview = ({ content, author = {}, theme = 'light', created_at }: TweetPreviewProps) => {
+export const TweetPreview = ({ content, author = {}, theme = 'light', created_at, favorite_count }: TweetPreviewProps) => {
   if (content.length > MAX_TWEET_LENGTH) {
     throw new Error(`Tweet content exceeds maximum length of ${MAX_TWEET_LENGTH} characters`);
   }
 
-  const tweet = enrichTweet(createPreviewTweet({ content, author, created_at }));
+  const tweet = enrichTweet(createPreviewTweet({ content, author, created_at, favorite_count }));
 
   const tweetContent = (
     <TweetContainer>
       <TweetHeader tweet={tweet} />
       <TweetBody tweet={tweet} />
       <TweetInfo tweet={tweet} />
+      {favorite_count !== undefined && <TweetActions tweet={tweet} />}
     </TweetContainer>
   );
 

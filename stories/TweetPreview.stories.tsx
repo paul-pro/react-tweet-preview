@@ -36,6 +36,7 @@ export const Dark: Story = {
       image: 'https://avatars.githubusercontent.com/u/1?v=4',
     },
     theme: 'dark',
+    favorite_count: 1337,
   },
 };
 

@@ -45,6 +45,7 @@ function App() {
 | `author.is_verified` | `boolean` | Whether the user has a blue checkmark | `false` |
 | `theme` | `'light' \| 'dark'` | Theme mode for the tweet preview | `'light'` |
 | `created_at` | `Date` | Tweet creation timestamp | Current date/time |
+| `favorite_count` | `number` | Number of likes, renders action buttons when provided | `undefined` |
 
 ## Features
 
@@ -52,6 +53,7 @@ function App() {
 - Automatic tweet data structure generation
 - Tweet length validation
 - Fallback handling for missing author information
+- Like count and action buttons support
 
 ## Development
 
