@@ -4,9 +4,10 @@ import type { Tweet } from 'react-tweet/api';
 export type TweetPreviewProps = {
   content: string;
   author?: {
-    name?: string | null;
-    username?: string | null;
-    image?: string | null;
+    name?: string;
+    username?: string;
+    image?: string;
+    is_verified?: boolean;
   };
   theme?: 'light' | 'dark';
   created_at?: Date;
@@ -14,31 +15,25 @@ export type TweetPreviewProps = {
 
 const MAX_TWEET_LENGTH = 280;
 
-const DEFAULT_AUTHOR = {
-  name: null,
-  username: null,
-  image: null,
-} as const;
-
 const FALLBACK_AUTHOR = {
   name: 'User',
   username: 'user',
   image: 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png',
 } as const;
 
-const createPreviewTweet = ({ content, author = DEFAULT_AUTHOR, created_at = new Date() }: TweetPreviewProps): Tweet => {
-  const { name, username, image } = author;
-  const normalizedUsername = username?.toLowerCase().replace(/\s+/g, '') ?? FALLBACK_AUTHOR.username;
+const createPreviewTweet = ({ content, author = {}, created_at = new Date() }: TweetPreviewProps): Tweet => {
+  const { name, username, image, is_verified = false } = author;
+  const normalizedUsername = username?.toLowerCase().replace(/\s+/g, '');
   return {
     text: content,
     created_at: created_at.toISOString(),
     user: {
       name: name ?? FALLBACK_AUTHOR.name,
-      screen_name: normalizedUsername,
+      screen_name: normalizedUsername ?? FALLBACK_AUTHOR.username,
       profile_image_url_https: image ?? FALLBACK_AUTHOR.image,
       profile_image_shape: 'Circle',
-      verified: false,
-      is_blue_verified: false,
+      verified: is_verified,
+      is_blue_verified: is_verified,
       id_str: 'preview',
     },
     entities: {
@@ -66,7 +61,7 @@ const createPreviewTweet = ({ content, author = DEFAULT_AUTHOR, created_at = new
   };
 };
 
-export const TweetPreview = ({ content, author = DEFAULT_AUTHOR, theme = 'light', created_at }: TweetPreviewProps) => {
+export const TweetPreview = ({ content, author = {}, theme = 'light', created_at }: TweetPreviewProps) => {
   if (content.length > MAX_TWEET_LENGTH) {
     throw new Error(`Tweet content exceeds maximum length of ${MAX_TWEET_LENGTH} characters`);
   }

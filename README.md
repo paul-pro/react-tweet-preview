@@ -40,8 +40,9 @@ function App() {
 | `content` * | `string` | The content of the tweet (limited to 280 characters) | - |
 | `author` | `object` | Author information object | 👇 |
 | `author.name` | `string` | Display name | `'User'` |
-| `author.username` | `string` | Twitter handle (without @) | `'user'` |
+| `author.username` | `string` | Twitter handle (without @), automatically converted to lowercase and stripped of whitespace | `'user'` |
 | `author.image` | `string` | URL to profile picture | Default Twitter avatar |
+| `author.is_verified` | `boolean` | Whether the user has a blue checkmark | `false` |
 | `theme` | `'light' \| 'dark'` | Theme mode for the tweet preview | `'light'` |
 | `created_at` | `Date` | Tweet creation timestamp | Current date/time |
 
