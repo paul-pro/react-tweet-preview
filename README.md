@@ -21,11 +21,6 @@ function App() {
   return (
     <TweetPreview
       content="Hello, world! #FirstTweet"
-      author={{
-        name: 'John Doe',
-        username: 'johndoe',
-        image: 'https://example.com/avatar.jpg'
-      }}
     />
   );
 }
@@ -47,6 +42,7 @@ function App() {
 | `created_at` | `Date` | Tweet creation timestamp | Current date/time |
 | `favorite_count` | `number` | Number of likes, renders action buttons when provided | `undefined` |
 | `image` | `string` | URL of the image to attach to the tweet | `undefined` |
+| `in_reply_to_screen_name` | `string` | Username of the tweet being replied to | `undefined` |
 
 ## Features
 
@@ -56,6 +52,7 @@ function App() {
 - Fallback handling for missing author information
 - Like count and action buttons support
 - Image attachment support with automatic size detection
+- Reply to tweet support
 
 ## Development
 
@@ -70,6 +67,8 @@ bun i && bun run storybook
 
 Future improvements and features we're considering:
 
+- [x] Image attachment previews
+- [x] Tweet reply support
 - [ ] Tweet thread support
 - [ ] Use storycap to refresh readme image
 

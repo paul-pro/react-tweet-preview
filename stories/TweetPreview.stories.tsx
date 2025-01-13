@@ -70,3 +70,16 @@ export const WithImage: Story = {
     favorite_count: 42,
   },
 };
+
+export const WithReply: Story = {
+  args: {
+    content: 'Great shot! What camera did you use? 📸',
+    author: {
+      name: 'Photography Fan',
+      username: 'photofan',
+      image: 'https://avatars.githubusercontent.com/u/2?v=4',
+    },
+    in_reply_to_screen_name: 'naturelover',
+    favorite_count: 7,
+  },
+};

@@ -15,6 +15,7 @@ export type TweetPreviewProps = {
   created_at?: Date;
   favorite_count?: number;
   image?: string;
+  in_reply_to_screen_name?: string;
 };
 
 const MAX_TWEET_LENGTH = 280;
@@ -25,7 +26,7 @@ const FALLBACK_AUTHOR = {
   image: 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png',
 } as const;
 
-const createPreviewTweet = ({ content, author = {}, created_at = new Date(), favorite_count, image, imageSize }: TweetPreviewProps & { imageSize?: { width: number; height: number } | null }): Tweet => {
+const createPreviewTweet = ({ content, author = {}, created_at = new Date(), favorite_count, image, imageSize, in_reply_to_screen_name }: TweetPreviewProps & { imageSize?: { width: number; height: number } | null }): Tweet => {
   const { name, username, image: authorImage, is_verified = false } = author;
   const normalizedUsername = username?.toLowerCase().replace(/\s+/g, '');
 
@@ -67,10 +68,13 @@ const createPreviewTweet = ({ content, author = {}, created_at = new Date(), fav
     quoted_tweet: undefined,
     isEdited: false,
     isStaleEdit: false,
+    in_reply_to_screen_name,
+    in_reply_to_status_id_str: in_reply_to_screen_name ? 'preview' : undefined,
+    in_reply_to_user_id_str: in_reply_to_screen_name ? 'preview' : undefined,
   };
 };
 
-export const TweetPreview = ({ content, author = {}, theme = 'light', created_at, favorite_count, image }: TweetPreviewProps) => {
+export const TweetPreview = ({ content, author = {}, theme = 'light', created_at, favorite_count, image, in_reply_to_screen_name }: TweetPreviewProps) => {
   const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>();
 
   useEffect(() => {
@@ -83,13 +87,15 @@ export const TweetPreview = ({ content, author = {}, theme = 'light', created_at
     throw new Error(`Tweet content exceeds maximum length of ${MAX_TWEET_LENGTH} characters`);
   }
 
-  const tweet = enrichTweet(createPreviewTweet({ content, author, created_at, favorite_count, image, imageSize }));
+  const tweet = enrichTweet(createPreviewTweet({ content, author, created_at, favorite_count, image, imageSize, in_reply_to_screen_name }));
 
   const tweetContent = (
     <TweetContainer>
       <TweetHeader tweet={tweet} />
+      {in_reply_to_screen_name && <TweetInReplyTo tweet={tweet} />}
       <TweetBody tweet={tweet} />
       {image && imageSize && <TweetMedia tweet={tweet} components={{ MediaImg: CustomMediaImg }} />}
+      {tweet.quoted_tweet && <QuotedTweet tweet={tweet.quoted_tweet} />}
       <TweetInfo tweet={tweet} />
       {favorite_count !== undefined && <TweetActions tweet={tweet} />}
     </TweetContainer>
