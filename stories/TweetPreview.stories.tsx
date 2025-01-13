@@ -32,7 +32,7 @@ export const Default: Story = {
 
 export const Dark: Story = {
   args: {
-    content: 'This is a preview of a tweet with #hashtag and @mention in dark mode',
+    content: 'Dark mode: where bugs hide better but ideas shine brighter 🌚',
     author: {
       name: 'John Doe',
       username: 'johndoe',
@@ -84,7 +84,7 @@ export const WithImage: Story = {
     author: {
       name: 'Nature Lover',
       username: 'naturelover',
-      image: 'https://avatars.githubusercontent.com/u/1?v=4',
+      image: 'https://pbs.twimg.com/profile_images/1874558173962481664/8HSTqIlD_400x400.jpg',
     },
     image: 'https://upload.wikimedia.org/wikipedia/commons/d/d2/Parus_major_Luc_Viatour.jpg',
     favorite_count: 42,
@@ -97,7 +97,7 @@ export const WithReply: Story = {
     author: {
       name: 'Photography Fan',
       username: 'photofan',
-      image: 'https://avatars.githubusercontent.com/u/2?v=4',
+      image: 'https://pbs.twimg.com/profile_images/1715183897297002496/67FPPcja_400x400.png',
     },
     in_reply_to_screen_name: 'naturelover',
     favorite_count: 7,
@@ -117,9 +117,9 @@ export const WithQuote: Story = {
       content:
         'Just released a new version of react-tweet-preview with image and quote support! 🚀',
       author: {
-        name: 'Pavel Pro',
-        username: 'pavelpro',
-        image: 'https://avatars.githubusercontent.com/u/1?v=4',
+        name: 'Pavel Prokudin',
+        username: 'en_pavel',
+        image: 'https://pbs.twimg.com/profile_images/1869843114841522176/uzOFILE3_400x400.jpg',
         is_verified: true,
       },
     },
