@@ -21,6 +21,11 @@ const URL_REGEX =
 const MENTION_REGEX = /@(\w+)/g;
 const HASHTAG_REGEX = /#(\w+)/g;
 
+// Helper to get the visual index in a string
+const getVisualIndex = (str: string, rawIndex: number): number => {
+  return [...str.slice(0, rawIndex)].length;
+};
+
 export const parseTweetContent = (content: string): Entity[] => {
   const entities: Entity[] = [];
   let lastIndex = 0;
@@ -33,7 +38,7 @@ export const parseTweetContent = (content: string): Entity[] => {
         entities.push({
           type: 'text',
           text,
-          indices: [lastIndex, endIndex],
+          indices: [getVisualIndex(content, lastIndex), getVisualIndex(content, endIndex)],
         });
       }
     }
@@ -80,7 +85,7 @@ export const parseTweetContent = (content: string): Entity[] => {
       type,
       text,
       href,
-      indices: [startIndex, endIndex],
+      indices: [getVisualIndex(content, startIndex), getVisualIndex(content, endIndex)],
     });
 
     lastIndex = endIndex;

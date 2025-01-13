@@ -32,7 +32,7 @@ export const Default: Story = {
 
 export const Dark: Story = {
   args: {
-    content: 'Dark mode: where bugs hide better but ideas shine brighter 🌚',
+    content: 'Dark mode: where bugs hide better but ideas shine brighter 🌚\n#showerthoughts #darkmode',
     author: {
       name: 'John Doe',
       username: 'johndoe',
@@ -93,7 +93,7 @@ export const WithImage: Story = {
 
 export const WithReply: Story = {
   args: {
-    content: 'Great shot! What camera did you use? 📸',
+    content: 'Great shot! @naturelover, what camera did you use? 📸',
     author: {
       name: 'Photography Fan',
       username: 'photofan',
