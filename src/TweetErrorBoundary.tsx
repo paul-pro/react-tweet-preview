@@ -14,7 +14,8 @@ const TweetError = ({ title = 'Tweet Error', children }: TweetErrorProps) => (
       padding: '16px 24px',
       color: '#c62828',
       maxWidth: 500,
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+      fontFamily:
+        '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
     }}
   >
     <h4 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 600 }}>{title}</h4>
@@ -59,4 +60,4 @@ export class TweetErrorBoundary extends Component<Props, State> {
 
     return children;
   }
-} 
+}

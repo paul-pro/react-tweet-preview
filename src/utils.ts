@@ -1,7 +1,6 @@
 import type { Indices, TweetEntities, MediaDetails, QuotedTweet } from 'react-tweet/api';
 import type { TweetPreviewProps } from './TweetPreview';
 
-
 type Entity = {
   type: 'hashtag' | 'mention' | 'url' | 'text';
   text: string;
@@ -17,7 +16,8 @@ export const FALLBACK_AUTHOR = {
   image: 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png',
 } as const;
 
-const URL_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g;
+const URL_REGEX =
+  /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/g;
 const MENTION_REGEX = /@(\w+)/g;
 const HASHTAG_REGEX = /#(\w+)/g;
 
@@ -41,9 +41,15 @@ export const parseTweetContent = (content: string): Entity[] => {
 
   // Find all matches for each type
   const matches = [
-    ...Array.from(content.matchAll(URL_REGEX)).map(match => ({ type: 'url' as const, match })),
-    ...Array.from(content.matchAll(MENTION_REGEX)).map(match => ({ type: 'mention' as const, match })),
-    ...Array.from(content.matchAll(HASHTAG_REGEX)).map(match => ({ type: 'hashtag' as const, match })),
+    ...Array.from(content.matchAll(URL_REGEX)).map((match) => ({ type: 'url' as const, match })),
+    ...Array.from(content.matchAll(MENTION_REGEX)).map((match) => ({
+      type: 'mention' as const,
+      match,
+    })),
+    ...Array.from(content.matchAll(HASHTAG_REGEX)).map((match) => ({
+      type: 'hashtag' as const,
+      match,
+    })),
   ].sort((a, b) => (a.match.index ?? 0) - (b.match.index ?? 0));
 
   // Process matches in order
@@ -86,7 +92,10 @@ export const parseTweetContent = (content: string): Entity[] => {
   return entities;
 };
 
-export const transformToTweetEntities = (entities: Entity[], media?: MediaDetails[]): TweetEntities => {
+export const transformToTweetEntities = (
+  entities: Entity[],
+  media?: MediaDetails[]
+): TweetEntities => {
   const result: TweetEntities = {
     hashtags: [],
     urls: [],
@@ -143,7 +152,7 @@ export const getImageSize = (url: string): Promise<{ width: number; height: numb
 export const createMediaDetails = (
   image: string,
   imageSize: { width: number; height: number },
-  contentLength: number,
+  contentLength: number
 ): MediaDetails[] => [
   {
     display_url: image,
@@ -176,12 +185,15 @@ export const createMediaDetails = (
   },
 ];
 
-export const createQuotedTweet = (quoted_tweet: NonNullable<TweetPreviewProps['quoted_tweet']>): QuotedTweet => ({
+export const createQuotedTweet = (
+  quoted_tweet: NonNullable<TweetPreviewProps['quoted_tweet']>
+): QuotedTweet => ({
   text: quoted_tweet.content,
   created_at: (quoted_tweet.created_at ?? new Date()).toISOString(),
   user: {
     name: quoted_tweet.author?.name ?? FALLBACK_AUTHOR.name,
-    screen_name: quoted_tweet.author?.username?.toLowerCase().replace(/\s+/g, '') ?? FALLBACK_AUTHOR.username,
+    screen_name:
+      quoted_tweet.author?.username?.toLowerCase().replace(/\s+/g, '') ?? FALLBACK_AUTHOR.username,
     profile_image_url_https: quoted_tweet.author?.image ?? FALLBACK_AUTHOR.image,
     profile_image_shape: 'Circle' as const,
     verified: quoted_tweet.author?.is_verified ?? false,
@@ -211,4 +223,4 @@ export const createQuotedTweet = (quoted_tweet: NonNullable<TweetPreviewProps['q
   self_thread: {
     id_str: 'quoted',
   },
-}); 
+});

@@ -1,8 +1,26 @@
 import { useEffect, useState } from 'react';
-import { TweetBody, TweetContainer, TweetHeader, TweetInfo, enrichTweet, TweetInReplyTo, TweetMedia, QuotedTweet, TweetActions } from 'react-tweet';
+import {
+  TweetBody,
+  TweetContainer,
+  TweetHeader,
+  TweetInfo,
+  enrichTweet,
+  TweetInReplyTo,
+  TweetMedia,
+  QuotedTweet,
+  TweetActions,
+} from 'react-tweet';
 import type { Tweet } from 'react-tweet/api';
 import { TweetErrorBoundary } from './TweetErrorBoundary';
-import { parseTweetContent, transformToTweetEntities, createMediaDetails, getImageSize, createQuotedTweet, MAX_TWEET_LENGTH, FALLBACK_AUTHOR } from './utils';
+import {
+  parseTweetContent,
+  transformToTweetEntities,
+  createMediaDetails,
+  getImageSize,
+  createQuotedTweet,
+  MAX_TWEET_LENGTH,
+  FALLBACK_AUTHOR,
+} from './utils';
 
 export type TweetPreviewProps = {
   content: string;
@@ -29,9 +47,16 @@ export type TweetPreviewProps = {
   };
 };
 
-
-
-const createPreviewTweet = ({ content, author = {}, created_at = new Date(), favorite_count, image, imageSize, in_reply_to_screen_name, quoted_tweet }: TweetPreviewProps & { imageSize?: { width: number; height: number } | null }): Tweet => {
+const createPreviewTweet = ({
+  content,
+  author = {},
+  created_at = new Date(),
+  favorite_count,
+  image,
+  imageSize,
+  in_reply_to_screen_name,
+  quoted_tweet,
+}: TweetPreviewProps & { imageSize?: { width: number; height: number } | null }): Tweet => {
   const { name, username, image: authorImage, is_verified = false } = author;
   const normalizedUsername = username?.toLowerCase().replace(/\s+/g, '');
 
@@ -74,7 +99,16 @@ const createPreviewTweet = ({ content, author = {}, created_at = new Date(), fav
   };
 };
 
-export const TweetPreview = ({ content, author = {}, theme = 'light', created_at, favorite_count, image, in_reply_to_screen_name, quoted_tweet }: TweetPreviewProps) => {
+export const TweetPreview = ({
+  content,
+  author = {},
+  theme = 'light',
+  created_at,
+  favorite_count,
+  image,
+  in_reply_to_screen_name,
+  quoted_tweet,
+}: TweetPreviewProps) => {
   const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>();
 
   useEffect(() => {
@@ -87,7 +121,18 @@ export const TweetPreview = ({ content, author = {}, theme = 'light', created_at
     throw new Error(`Tweet content exceeds maximum length of ${MAX_TWEET_LENGTH} characters`);
   }
 
-  const tweet = enrichTweet(createPreviewTweet({ content, author, created_at, favorite_count, image, imageSize, in_reply_to_screen_name, quoted_tweet }));
+  const tweet = enrichTweet(
+    createPreviewTweet({
+      content,
+      author,
+      created_at,
+      favorite_count,
+      image,
+      imageSize,
+      in_reply_to_screen_name,
+      quoted_tweet,
+    })
+  );
 
   const tweetContent = (
     <TweetContainer>
@@ -104,7 +149,7 @@ export const TweetPreview = ({ content, author = {}, theme = 'light', created_at
   if (theme === 'dark') {
     return (
       <TweetErrorBoundary>
-        <div data-theme='dark'>{tweetContent}</div>
+        <div data-theme="dark">{tweetContent}</div>
       </TweetErrorBoundary>
     );
   }
@@ -112,11 +157,13 @@ export const TweetPreview = ({ content, author = {}, theme = 'light', created_at
   return <TweetErrorBoundary>{tweetContent}</TweetErrorBoundary>;
 };
 
-const CustomMediaImg = ({ src, ...props }: { src: string; alt: string; className?: string; draggable?: boolean }) => {
-    const originalUrl = src.split('?')[0].endsWith('.jpg')
-      ? src.split('?')[0]
-      : `${src.split('?')[0]}.jpg`;
-    // biome-ignore lint/a11y/useAltText: no alt text for this image
-    return <img src={originalUrl} {...props} />;
-  };
-  
+const CustomMediaImg = ({
+  src,
+  ...props
+}: { src: string; alt: string; className?: string; draggable?: boolean }) => {
+  const originalUrl = src.split('?')[0].endsWith('.jpg')
+    ? src.split('?')[0]
+    : `${src.split('?')[0]}.jpg`;
+  // biome-ignore lint/a11y/useAltText: no alt text for this image
+  return <img src={originalUrl} {...props} />;
+};

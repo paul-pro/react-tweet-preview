@@ -17,12 +17,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    content: 'This is a preview of a tweet with #hashtag and @mention',
+    content:
+      "Just saw my tweet about react-tweet-preview in react-tweet-preview before I tweeted it 🌀\n\nA React component for previewing tweets before posting, built on @vercel's react-tweet.\n\nThe simulation is complete now.",
     author: {
-      name: 'John Doe',
-      username: 'johndoe',
-      image: 'https://avatars.githubusercontent.com/u/1?v=4',
+      name: 'Guillermo Rauch',
+      username: 'rauchg',
+      image: 'https://pbs.twimg.com/profile_images/1783856060249595904/8TfcCN0r_400x400.jpg',
+      is_verified: true,
     },
+    favorite_count: 4269,
     theme: 'light',
   },
 };
@@ -40,20 +43,37 @@ export const Dark: Story = {
   },
 };
 
-const ErrorExample = () => {
-    throw new Error('Example error to demonstrate TweetErrorBoundary');
-    return null;
-  };
+export const TextOnly: Story = {
+  args: {
+    content: 'Sometimes all you need is 280 characters to express your thoughts',
+  },
+};
 
-export const ErrorBoundary: StoryObj = {
-  render: () => (
-    <TweetErrorBoundary>
-      <ErrorExample />
-    </TweetErrorBoundary>
-  ),
-  parameters: {
-    docs: {
-      description: 'Shows error display when an error occurs',
+export const FullProps: Story = {
+  args: {
+    content:
+      'Excited to share my thoughts on web development! Check out this article about React Server Components 🚀\n\nThread incoming... 🧵',
+    author: {
+      name: 'Engagement Factory',
+      username: 'fordevs',
+      image: 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png',
+      is_verified: true,
+    },
+    theme: 'light',
+    created_at: new Date('2024-03-14T12:00:00Z'),
+    favorite_count: 853,
+    image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800',
+    in_reply_to_screen_name: 'reactjs',
+    quoted_tweet: {
+      content:
+        'Announcing React Server Components: A new model for building applications that combines the rich interactivity of client-side apps with the improved performance of traditional server rendering.',
+      author: {
+        name: 'React',
+        username: 'reactjs',
+        image: 'https://avatars.githubusercontent.com/u/6412038?v=4',
+        is_verified: true,
+      },
+      created_at: new Date('2024-03-14T11:30:00Z'),
     },
   },
 };
@@ -94,7 +114,8 @@ export const WithQuote: Story = {
       is_verified: true,
     },
     quoted_tweet: {
-      content: 'Just released a new version of react-tweet-preview with image and quote support! 🚀',
+      content:
+        'Just released a new version of react-tweet-preview with image and quote support! 🚀',
       author: {
         name: 'Pavel Pro',
         username: 'pavelpro',
@@ -103,5 +124,22 @@ export const WithQuote: Story = {
       },
     },
     favorite_count: 128,
+  },
+};
+
+const ErrorExample = () => {
+  throw new Error('Example error to demonstrate TweetErrorBoundary');
+};
+
+export const ErrorBoundary: StoryObj = {
+  render: () => (
+    <TweetErrorBoundary>
+      <ErrorExample />
+    </TweetErrorBoundary>
+  ),
+  parameters: {
+    docs: {
+      description: 'Shows error display when an error occurs',
+    },
   },
 };
