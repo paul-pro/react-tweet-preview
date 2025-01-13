@@ -32,7 +32,8 @@ export const Default: Story = {
 
 export const Dark: Story = {
   args: {
-    content: 'Dark mode: where bugs hide better but ideas shine brighter 🌚\n#showerthoughts #darkmode',
+    content:
+      'Dark mode: where bugs hide better but ideas shine brighter 🌚\n#showerthoughts #darkmode',
     author: {
       name: 'John Doe',
       username: 'johndoe',

@@ -139,7 +139,17 @@ export const TweetPreview = ({
       <TweetHeader tweet={tweet} />
       {in_reply_to_screen_name && <TweetInReplyTo tweet={tweet} />}
       <TweetBody tweet={tweet} />
-      {image && imageSize && <TweetMedia tweet={tweet} components={{ MediaImg: CustomMediaImg }} />}
+      {image && imageSize && (
+        <TweetMedia
+          tweet={tweet}
+          components={{
+            MediaImg: ({ src: _src, ...props }) => (
+              // biome-ignore lint/a11y/useAltText: no alt text for this image
+              <img src={image} {...props} />
+            ),
+          }}
+        />
+      )}
       {tweet.quoted_tweet && <QuotedTweet tweet={tweet.quoted_tweet} />}
       <TweetInfo tweet={tweet} />
       {favorite_count !== undefined && <TweetActions tweet={tweet} />}
@@ -155,15 +165,4 @@ export const TweetPreview = ({
   }
 
   return <TweetErrorBoundary>{tweetContent}</TweetErrorBoundary>;
-};
-
-const CustomMediaImg = ({
-  src,
-  ...props
-}: { src: string; alt: string; className?: string; draggable?: boolean }) => {
-  const originalUrl = src.split('?')[0].endsWith('.jpg')
-    ? src.split('?')[0]
-    : `${src.split('?')[0]}.jpg`;
-  // biome-ignore lint/a11y/useAltText: no alt text for this image
-  return <img src={originalUrl} {...props} />;
 };
