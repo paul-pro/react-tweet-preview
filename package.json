@@ -16,7 +16,7 @@
     }
   },
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "vite build && tsc",
     "lint": "biome lint .",
     "format": "biome format . --write",
     "ci": "biome ci --reporter=github && tsc --noEmit",

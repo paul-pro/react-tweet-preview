@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TweetPreview } from '../src/TweetPreview';
 import { TweetErrorBoundary } from '../src/TweetErrorBoundary';
