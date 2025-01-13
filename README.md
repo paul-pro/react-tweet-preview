@@ -43,6 +43,10 @@ function App() {
 | `favorite_count` | `number` | Number of likes, renders action buttons when provided | `undefined` |
 | `image` | `string` | URL of the image to attach to the tweet | `undefined` |
 | `in_reply_to_screen_name` | `string` | Username of the tweet being replied to | `undefined` |
+| `quoted_tweet` | `object` | Tweet being quoted | `undefined` |
+| `quoted_tweet.content` | `string` | Content of the quoted tweet | - |
+| `quoted_tweet.author` | `object` | Author information for the quoted tweet (same structure as `author`) | Same defaults as `author` |
+| `quoted_tweet.created_at` | `Date` | Creation timestamp of the quoted tweet | Current date/time |
 
 ## Features
 
@@ -53,6 +57,7 @@ function App() {
 - Like count and action buttons support
 - Image attachment support with automatic size detection
 - Reply to tweet support
+- Quote tweet support
 
 ## Development
 
@@ -67,8 +72,7 @@ bun i && bun run storybook
 
 Future improvements and features we're considering:
 
-- [x] Image attachment previews
-- [x] Tweet reply support
+- [x] Real quote tweet support
 - [ ] Tweet thread support
 - [ ] Use storycap to refresh readme image
 

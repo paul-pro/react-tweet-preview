@@ -16,6 +16,16 @@ export type TweetPreviewProps = {
   favorite_count?: number;
   image?: string;
   in_reply_to_screen_name?: string;
+  quoted_tweet?: {
+    content: string;
+    author?: {
+      name?: string;
+      username?: string;
+      image?: string;
+      is_verified?: boolean;
+    };
+    created_at?: Date;
+  };
 };
 
 const MAX_TWEET_LENGTH = 280;
@@ -26,7 +36,7 @@ const FALLBACK_AUTHOR = {
   image: 'https://abs.twimg.com/sticky/default_profile_images/default_profile.png',
 } as const;
 
-const createPreviewTweet = ({ content, author = {}, created_at = new Date(), favorite_count, image, imageSize, in_reply_to_screen_name }: TweetPreviewProps & { imageSize?: { width: number; height: number } | null }): Tweet => {
+const createPreviewTweet = ({ content, author = {}, created_at = new Date(), favorite_count, image, imageSize, in_reply_to_screen_name, quoted_tweet }: TweetPreviewProps & { imageSize?: { width: number; height: number } | null }): Tweet => {
   const { name, username, image: authorImage, is_verified = false } = author;
   const normalizedUsername = username?.toLowerCase().replace(/\s+/g, '');
 
@@ -65,7 +75,7 @@ const createPreviewTweet = ({ content, author = {}, created_at = new Date(), fav
       is_edit_eligible: false,
       edits_remaining: '0',
     },
-    quoted_tweet: undefined,
+    quoted_tweet: quoted_tweet ? createQuotedTweet(quoted_tweet) : undefined,
     isEdited: false,
     isStaleEdit: false,
     in_reply_to_screen_name,
@@ -74,7 +84,7 @@ const createPreviewTweet = ({ content, author = {}, created_at = new Date(), fav
   };
 };
 
-export const TweetPreview = ({ content, author = {}, theme = 'light', created_at, favorite_count, image, in_reply_to_screen_name }: TweetPreviewProps) => {
+export const TweetPreview = ({ content, author = {}, theme = 'light', created_at, favorite_count, image, in_reply_to_screen_name, quoted_tweet }: TweetPreviewProps) => {
   const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>();
 
   useEffect(() => {
@@ -87,7 +97,7 @@ export const TweetPreview = ({ content, author = {}, theme = 'light', created_at
     throw new Error(`Tweet content exceeds maximum length of ${MAX_TWEET_LENGTH} characters`);
   }
 
-  const tweet = enrichTweet(createPreviewTweet({ content, author, created_at, favorite_count, image, imageSize, in_reply_to_screen_name }));
+  const tweet = enrichTweet(createPreviewTweet({ content, author, created_at, favorite_count, image, imageSize, in_reply_to_screen_name, quoted_tweet }));
 
   const tweetContent = (
     <TweetContainer>
@@ -166,3 +176,44 @@ const getImageSize = (url: string): Promise<{ width: number; height: number } | 
       : `${src.split('?')[0]}.jpg`;
     return <img src={originalUrl} {...props} />;
   };
+
+  const createQuotedTweet = (quoted_tweet: NonNullable<TweetPreviewProps['quoted_tweet']>) => ({
+    text: quoted_tweet.content,
+    created_at: (quoted_tweet.created_at ?? new Date()).toISOString(),
+    user: {
+      name: quoted_tweet.author?.name ?? FALLBACK_AUTHOR.name,
+      screen_name: quoted_tweet.author?.username?.toLowerCase().replace(/\s+/g, '') ?? FALLBACK_AUTHOR.username,
+      profile_image_url_https: quoted_tweet.author?.image ?? FALLBACK_AUTHOR.image,
+      profile_image_shape: 'Circle' as const,
+      verified: quoted_tweet.author?.is_verified ?? false,
+      is_blue_verified: quoted_tweet.author?.is_verified ?? false,
+      id_str: 'quoted',
+    },
+    entities: {
+      hashtags: [],
+      urls: [],
+      user_mentions: [],
+      symbols: [],
+    },
+    __typename: 'Tweet',
+    favorite_count: 0,
+    reply_count: 0,
+    retweet_count: 0,
+    conversation_count: 0,
+    news_action_type: 'conversation',
+    lang: 'en',
+    display_text_range: [0, quoted_tweet.content.length] as Indices,
+    id_str: 'quoted',
+    edit_control: {
+      edit_tweet_ids: ['quoted'],
+      editable_until_msecs: '0',
+      is_edit_eligible: false,
+      edits_remaining: '0',
+    },
+    isEdited: false,
+    isStaleEdit: false,
+    self_thread: {
+      id_str: 'quoted',
+    },
+  });
+  

@@ -83,3 +83,25 @@ export const WithReply: Story = {
     favorite_count: 7,
   },
 };
+
+export const WithQuote: Story = {
+  args: {
+    content: 'This is exactly what I was talking about! 🎯',
+    author: {
+      name: 'Tech Enthusiast',
+      username: 'techlover',
+      image: 'https://avatars.githubusercontent.com/u/3?v=4',
+      is_verified: true,
+    },
+    quoted_tweet: {
+      content: 'Just released a new version of react-tweet-preview with image and quote support! 🚀',
+      author: {
+        name: 'Pavel Pro',
+        username: 'pavelpro',
+        image: 'https://avatars.githubusercontent.com/u/1?v=4',
+        is_verified: true,
+      },
+    },
+    favorite_count: 128,
+  },
+};
