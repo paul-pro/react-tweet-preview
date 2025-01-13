@@ -14,13 +14,27 @@ npm install react-tweet-preview
 
 ## Usage
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/tweet-dark.png" width="550px">
+    <source media="(prefers-color-scheme: light)" srcset="assets/tweet-light.png" width="550px">
+    <img alt="Tweet Preview Example" src="assets/tweet-light.png" width="550px">
+  </picture>
+</p>
+
 ```tsx
 import { TweetPreview } from 'react-tweet-preview';
 
 function App() {
   return (
     <TweetPreview
-      content="Hello, world! #FirstTweet"
+      content="On GitHub, you can use media queries to display different images based on the user's theme\n#protip"
+      author={{
+        name: 'John Doe',
+        username: 'johndoe',
+        image: 'https://avatars.githubusercontent.com/u/1?v=4',
+      }}
+      favorite_count={1337}
     />
   );
 }
