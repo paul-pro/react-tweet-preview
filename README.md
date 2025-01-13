@@ -53,6 +53,10 @@ function App() {
 - Seamless integration with react-tweet for rendering
 - Automatic tweet data structure generation
 - Tweet length validation
+- Automatic parsing and linking of:
+  - @mentions
+  - #hashtags
+  - URLs
 - Fallback handling for missing author information
 - Like count and action buttons support
 - Image attachment support with automatic size detection
@@ -72,7 +76,7 @@ bun i && bun run storybook
 
 Future improvements and features we're considering:
 
-- [x] Real quote tweet support
+- [ ] Real quote tweet support
 - [ ] Tweet thread support
 - [ ] Use storycap to refresh readme image
 
