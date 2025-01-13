@@ -76,6 +76,7 @@ bun i && bun run storybook
 
 Future improvements and features we're considering:
 
+- [ ] Add example of a tweet posting
 - [ ] Real quote tweet support
 - [ ] Tweet thread support
 - [ ] Use storycap to refresh readme image
