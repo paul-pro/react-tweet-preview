@@ -57,3 +57,16 @@ export const ErrorBoundary: StoryObj = {
     },
   },
 };
+
+export const WithImage: Story = {
+  args: {
+    content: 'Look at this beautiful bird! 🐦',
+    author: {
+      name: 'Nature Lover',
+      username: 'naturelover',
+      image: 'https://avatars.githubusercontent.com/u/1?v=4',
+    },
+    image: 'https://upload.wikimedia.org/wikipedia/commons/d/d2/Parus_major_Luc_Viatour.jpg',
+    favorite_count: 42,
+  },
+};

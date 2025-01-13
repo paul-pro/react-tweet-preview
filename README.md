@@ -46,6 +46,7 @@ function App() {
 | `theme` | `'light' \| 'dark'` | Theme mode for the tweet preview | `'light'` |
 | `created_at` | `Date` | Tweet creation timestamp | Current date/time |
 | `favorite_count` | `number` | Number of likes, renders action buttons when provided | `undefined` |
+| `image` | `string` | URL of the image to attach to the tweet | `undefined` |
 
 ## Features
 
@@ -54,6 +55,7 @@ function App() {
 - Tweet length validation
 - Fallback handling for missing author information
 - Like count and action buttons support
+- Image attachment support with automatic size detection
 
 ## Development
 
@@ -68,12 +70,6 @@ bun i && bun run storybook
 
 Future improvements and features we're considering:
 
-- [ ] Image attachment previews
-- [ ] Link preview support
-- [ ] Customizable tweet metadata (created_at, language)
-- [ ] Verified status customization
-- [ ] Accessibility improvements
-- [ ] Error boundary for graceful error handling
 - [ ] Tweet thread support
 - [ ] Use storycap to refresh readme image
 
